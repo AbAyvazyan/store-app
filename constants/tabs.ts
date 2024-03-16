@@ -2,7 +2,7 @@ import { Ttabs } from "@/utils/types";
 
 export const tabs: Ttabs[] = [
   {
-    name: "index",
+    name: "home",
     title: "Home",
     icon: "home",
     headerTitle: "",

@@ -58,7 +58,7 @@ function RootLayoutNav() {
           <Stack.Screen name="[single]" />
         </>
       ) : (
-        <Stack.Screen name="login" />
+        <Stack.Screen name="index" />
       )}
     </Stack>
   );

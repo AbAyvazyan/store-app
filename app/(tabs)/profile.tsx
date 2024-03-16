@@ -26,7 +26,7 @@ export default function Page() {
   }
   const onLogoutHandler = async () => {
     await AsyncStorage.clear();
-    router.push("/login");
+    router.push("/");
   };
   return (
     <SafeAreaView className="h-full w-full">
