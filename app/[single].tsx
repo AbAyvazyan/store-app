@@ -1,5 +1,6 @@
 import Button from '@/components/Button';
 import Slider from '@/components/carousel';
+import useProductLike from '@/hooks/useProductLike';
 import useSingleProduct from '@/hooks/useSingleProduct';
 import { Slide } from '@/utils/types';
 import { FontAwesome } from '@expo/vector-icons';
@@ -13,19 +14,11 @@ import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 
 export default function singleProduct() {
   const { single } = useLocalSearchParams();
-  const [liked, setLiked] = useState(false)
-
+  const { isLiked, onLikeHandler } = useProductLike(Number(single))
   const { product, loading } = useSingleProduct(Number(single));
 
-  const onLikeHandler = () => {
-    setLiked(prevState => !prevState)
-  }
   const navigation = useNavigation();
 
-  const imagesWithIndex = product && product.images.map((imageUrl, index) => ({
-    id: index + 1,
-    img: imageUrl
-  }));
 
   return (
     <SafeAreaView>
@@ -43,7 +36,7 @@ export default function singleProduct() {
           return (
             <TouchableOpacity onPress={onLikeHandler}>
               <Text>
-                {liked ?
+                {isLiked ?
                   <FontAwesome size={23} name="heart" color={"red"} />
                   :
                   <FontAwesome size={23} name="heart-o" color={"#343434"} />

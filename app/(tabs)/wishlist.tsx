@@ -1,6 +1,6 @@
 import Product from '@/components/Product';
-import useAsyncStorage from '@/hooks/useAsynchStorage';
 import { IProduct } from '@/utils/types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
@@ -9,21 +9,27 @@ import { Text, View } from 'react-native';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 
 export default function Page() {
-  
+
   const [products, setProducts] = useState<IProduct[]>([]);
+  const [wishlist, setWishlist] = useState<number[]>([]);
   const [loading, setLoading] = useState(false);
-  const { storedValue } = useAsyncStorage('wishlist')
+
+  useEffect(() => {
+    (async () => {
+      const jsonData = await AsyncStorage.getItem('wishlist')
+      if (jsonData)
+        setWishlist(JSON.parse(jsonData))
+    })()
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
       try {
-        const fetchedProducts = await Promise.all(storedValue.map(async (productId) => {
+        const fetchedProducts = await Promise.all(wishlist.map(async (productId) => {
           const response = await fetch(`https://dummyjson.com/products/${productId}`);
           return await response.json();
         }));
-
-        console.log(fetchedProducts, 'fetchedProducts////')
         setProducts(fetchedProducts);
         setLoading(false);
       } catch (error) {
@@ -33,9 +39,8 @@ export default function Page() {
     };
     fetchData();
 
-  }, [storedValue.length,storedValue.toString()]);
+  }, [wishlist]);
 
-  console.log(storedValue.length,storedValue.toString(),'//////////////////////////////////////////////////+')
 
   return (
     <ScrollView>

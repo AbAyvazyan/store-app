@@ -1,5 +1,6 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NavigationContainer } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Slot, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -35,9 +36,7 @@ export default function RootLayout() {
   }
 
   return (
-    <>
       <RootLayoutNav />
-    </>
   );
 }
 
@@ -57,7 +56,6 @@ function RootLayoutNav() {
   }, [])
 
   return (
-    <>
       <Stack screenOptions={{ headerShown: false }}>
         {isLoggedIn ? (
           <>
@@ -69,6 +67,5 @@ function RootLayoutNav() {
           <Stack.Screen name='login' />
         )}
       </Stack>
-    </>
   );
 }
