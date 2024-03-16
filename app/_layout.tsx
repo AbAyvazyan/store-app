@@ -1,23 +1,19 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NavigationContainer } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Slot, Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect, useState } from 'react';
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFonts } from "expo-font";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect, useState } from "react";
 
-export {
-  ErrorBoundary,
-} from 'expo-router';
-
+export { ErrorBoundary } from "expo-router";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    Gotham: require('../assets/fonts/Gotham-Font/GothamMedium.ttf'),
-    GothamBold: require('../assets/fonts/Gotham-Font/GothamBold.ttf'),
-    GothamLight: require('../assets/fonts/Gotham-Font/GothamLight.ttf'),
+    Gotham: require("../assets/fonts/Gotham-Font/GothamMedium.ttf"),
+    GothamBold: require("../assets/fonts/Gotham-Font/GothamBold.ttf"),
+    GothamLight: require("../assets/fonts/Gotham-Font/GothamLight.ttf"),
     ...FontAwesome.font,
   });
 
@@ -35,9 +31,7 @@ export default function RootLayout() {
     return null;
   }
 
-  return (
-      <RootLayoutNav />
-  );
+  return <RootLayoutNav />;
 }
 
 function RootLayoutNav() {
@@ -46,26 +40,26 @@ function RootLayoutNav() {
   useEffect(() => {
     async function checkLoginStatus() {
       try {
-        const user = await AsyncStorage.getItem('user');
+        const user = await AsyncStorage.getItem("user");
         setIsLoggedIn(!!user);
       } catch (error) {
-        console.error('Error while checking login status:', error);
+        console.error("Error while checking login status:", error);
       }
     }
     checkLoginStatus();
-  }, [])
+  }, []);
 
   return (
-      <Stack screenOptions={{ headerShown: false }}>
-        {isLoggedIn ? (
-          <>
-            <Stack.Screen name='(tabs)' />
-            <Stack.Screen name='product' />
-            <Stack.Screen name='[single]' />
-          </>
-        ) : (
-          <Stack.Screen name='login' />
-        )}
-      </Stack>
+    <Stack screenOptions={{ headerShown: false }}>
+      {isLoggedIn ? (
+        <>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="product" />
+          <Stack.Screen name="[single]" />
+        </>
+      ) : (
+        <Stack.Screen name="login" />
+      )}
+    </Stack>
   );
 }

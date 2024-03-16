@@ -1,15 +1,16 @@
-import React, { FC, useRef, useState } from 'react';
-import { Animated, FlatList, View, StyleSheet, ViewToken } from 'react-native';
-import SlideItem from './SlideItem';
-import { Slide } from '@/utils/types';
+import React, { FC, useRef } from "react";
+import { Animated, FlatList, View } from "react-native";
 
+import SlideItem from "./SlideItem";
 
+import { Slide } from "@/utils/types";
 
-const Slider:FC<{sliders:Slide[]}> = ({sliders}) => {
-  const [index, setIndex] = useState<number>(0);
+const Slider: FC<{ sliders: Slide[] }> = ({ sliders }) => {
   const scrollX = useRef(new Animated.Value(0)).current;
 
-  const handleOnScroll = (event: { nativeEvent: { contentOffset: { x: number } } }) => {
+  const handleOnScroll = (event: {
+    nativeEvent: { contentOffset: { x: number } };
+  }) => {
     Animated.event(
       [
         {
@@ -31,7 +32,7 @@ const Slider:FC<{sliders:Slide[]}> = ({sliders}) => {
   }).current;
 
   return (
-    <View className='h[800px]'>
+    <View className="h[800px]">
       <FlatList
         data={sliders}
         renderItem={({ item }) => <SlideItem item={item} />}

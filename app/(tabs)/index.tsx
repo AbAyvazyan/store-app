@@ -1,27 +1,28 @@
-import HomePageCategories from '@/components/HomePageCategories';
-import Slider from '@/components/carousel';
-import useCategories from '@/hooks/useCategories';
-import { Slide } from '@/utils/types';
-import { View, SafeAreaView, ScrollView } from 'react-native';
-import { ActivityIndicator, MD2Colors } from 'react-native-paper';
+import { View, SafeAreaView, ScrollView } from "react-native";
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
+
+import HomePageCategories from "@/components/HomePageCategories";
+import Slider from "@/components/carousel";
+import useCategories from "@/hooks/useCategories";
+import { Slide } from "@/utils/types";
 
 const Slides: Slide[] = [
   {
     id: 1,
-    img: require('../../assets/images/banner1.webp'),
+    img: require("../../assets/images/banner1.webp"),
   },
   {
     id: 2,
-    img: require('../../assets/images/banner2.webp'),
+    img: require("../../assets/images/banner2.webp"),
   },
   {
     id: 3,
-    img: require('../../assets/images/banner3.webp'),
+    img: require("../../assets/images/banner3.webp"),
   },
 ];
 
-export default function home() {
-  const { categories, loading } = useCategories()
+export default function Home() {
+  const { categories, loading } = useCategories();
   return (
     <SafeAreaView>
       <ScrollView>
@@ -29,14 +30,23 @@ export default function home() {
           <Slider sliders={Slides} />
         </View>
         <View className="w-[85%] mx-auto my-[30px]">
-          {loading
-            ?
-            <ActivityIndicator className='mt-10' animating={true} size={'large'} color={MD2Colors.deepPurple700} />
-            :
+          {loading ? (
+            <ActivityIndicator
+              className="mt-10"
+              animating
+              size="large"
+              color={MD2Colors.deepPurple700}
+            />
+          ) : (
             categories.map((singleCategory: string) => {
-              return <HomePageCategories key={singleCategory} category={singleCategory} />
+              return (
+                <HomePageCategories
+                  key={singleCategory}
+                  category={singleCategory}
+                />
+              );
             })
-          }
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
